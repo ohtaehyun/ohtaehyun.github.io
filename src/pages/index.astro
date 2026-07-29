@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, formatDate, sortPosts, type BlogPost } from '../data/site';
+
+const modules = import.meta.glob<BlogPost>('../content/posts/*.md', { eager: true });
+const posts = sortPosts(
+  Object.entries(modules).map(([path, post]) => ({
+    ...post,
+    url: `/posts/${path.split('/').pop()?.replace('.md', '')}/`
+  }))
+);
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Personal notes</p>
+      <h1>생각을 정리하고, 배운 것을 기록합니다.</h1>
+      <p>{site.description}</p>
+    </div>
+  </section>
+
+  <section class="content-section" aria-labelledby="latest-posts">
+    <div class="section-heading">
+      <h2 id="latest-posts">최근 글</h2>
+      <p>{posts.length}개의 글</p>
+    </div>
+
+    <div class="post-list">
+      {
+        posts.map((post) => (
+          <article class="post-card">
+            <a href={post.url}>
+              <time datetime={post.frontmatter.pubDate}>
+                {formatDate(post.frontmatter.pubDate)}
+              </time>
+              <h3>{post.frontmatter.title}</h3>
+              <p>{post.frontmatter.description}</p>
+              {post.frontmatter.tags?.length ? (
+                <ul class="tag-list" aria-label={`${post.frontmatter.title} 태그`}>
+                  {post.frontmatter.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

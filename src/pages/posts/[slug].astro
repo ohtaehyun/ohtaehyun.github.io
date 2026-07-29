@@ -1,0 +1,50 @@
+---
+import type { MarkdownInstance } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, type BlogPost } from '../../data/site';
+
+type PostModule = MarkdownInstance<BlogPost['frontmatter']>;
+
+export function getStaticPaths() {
+  const modules = import.meta.glob<PostModule>('../../content/posts/*.md', { eager: true });
+
+  return Object.entries(modules)
+    .filter(([, post]) => !post.frontmatter.draft)
+    .map(([path, post]) => ({
+      params: {
+        slug: path.split('/').pop()?.replace('.md', '')
+      },
+      props: { post }
+    }));
+}
+
+type Props = {
+  post: PostModule;
+};
+
+const { post } = Astro.props;
+const { Content } = post;
+---
+
+<BaseLayout title={post.frontmatter.title} description={post.frontmatter.description}>
+  <article class="post">
+    <a class="back-link" href="/">← 글 목록</a>
+    <header class="post-header">
+      <p class="eyebrow">{formatDate(post.frontmatter.pubDate)}</p>
+      <h1>{post.frontmatter.title}</h1>
+      <p>{post.frontmatter.description}</p>
+      {
+        post.frontmatter.tags?.length ? (
+          <ul class="tag-list" aria-label="태그">
+            {post.frontmatter.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+        ) : null
+      }
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="소개" description={`${site.author}의 블로그 소개`}>
+  <section class="page-section">
+    <p class="eyebrow">About</p>
+    <h1>안녕하세요. {site.author}입니다.</h1>
+    <p>
+      이곳은 개발하면서 배운 것, 오래 남기고 싶은 생각, 작은 실험을 기록하는 공간입니다.
+      글은 짧아도 나중에 다시 읽을 수 있게 맥락과 근거를 남기는 것을 목표로 합니다.
+    </p>
+  </section>
+</BaseLayout>

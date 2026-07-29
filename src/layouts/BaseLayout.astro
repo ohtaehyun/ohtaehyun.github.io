@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const title = Astro.props.title ? `${Astro.props.title} | ${site.title}` : site.title;
+const description = Astro.props.description ?? site.description;
+const canonical = new URL(Astro.url.pathname, site.url);
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label={`${site.title} 홈`}>
+        <span class="brand-mark" aria-hidden="true">OT</span>
+        <span>{site.title}</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="/">글</a>
+        <a href="/about/">소개</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} {site.author}. Built with Astro.</p>
+    </footer>
+  </body>
+</html>
