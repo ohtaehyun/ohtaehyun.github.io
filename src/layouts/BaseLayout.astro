@@ -45,5 +45,8 @@ const canonical = new URL(Astro.url.pathname, site.url);
     <footer class="site-footer">
       <p>© {new Date().getFullYear()} {site.author}. Built with Astro.</p>
     </footer>
+    <script>
+      import '../scripts/mermaid';
+    </script>
   </body>
 </html>
