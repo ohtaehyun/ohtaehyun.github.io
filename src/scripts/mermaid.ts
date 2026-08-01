@@ -1,6 +1,8 @@
 async function renderMermaidBlocks() {
   const blocks = Array.from(
-    document.querySelectorAll<HTMLElement>('pre > code.language-mermaid')
+    document.querySelectorAll<HTMLElement>(
+      'pre[data-language="mermaid"] > code, pre > code.language-mermaid'
+    )
   );
 
   if (!blocks.length) {
