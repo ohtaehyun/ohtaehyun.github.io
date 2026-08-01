@@ -16,7 +16,7 @@ tags:
 아래처럼 `mermaid` 코드블록을 쓰면 글 페이지에서 다이어그램으로 렌더링됩니다.
 
 ```mermaid
-flowchart TD
+flowchart LR
   A[Markdown 글 작성] --> B[Astro 빌드]
   B --> C[정적 HTML 생성]
   C --> D[GitHub Pages 배포]
