@@ -268,6 +268,20 @@ h3 {
   padding-left: 1.25rem;
 }
 
+.prose blockquote {
+  margin: 24px 0;
+  border-left: 4px solid var(--accent);
+  padding: 10px 0 10px 18px;
+  color: #252525;
+  background: #f8f5ee;
+}
+
+.prose blockquote p {
+  margin: 0;
+  color: inherit;
+  font-weight: 700;
+}
+
 .prose :not(pre) > code {
   border: 1px solid var(--line);
   border-radius: 6px;
