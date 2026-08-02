@@ -1,11 +1,16 @@
 async function renderMermaidBlocks() {
   const blocks = Array.from(
     document.querySelectorAll<HTMLElement>('pre[data-language="mermaid"] > code, pre > code.language-mermaid'),
-  );
+  ).filter((block) => block.parentElement?.dataset.mermaidRendered !== 'true');
 
   if (!blocks.length) {
     return;
   }
+
+  // Mark blocks before loading Mermaid so HMR-triggered renders cannot process them twice.
+  blocks.forEach((block) => {
+    block.parentElement?.setAttribute('data-mermaid-rendered', 'true');
+  });
 
   const { default: mermaid } = await import("mermaid");
 
@@ -37,11 +42,10 @@ async function renderMermaidBlocks() {
       const source = block.textContent?.trim();
       const pre = block.parentElement;
 
-      if (!source || !pre || pre.dataset.mermaidRendered === "true") {
+      if (!source || !pre) {
         return;
       }
 
-      pre.dataset.mermaidRendered = "true";
       pre.classList.add("mermaid-block");
 
       try {
@@ -51,6 +55,7 @@ async function renderMermaidBlocks() {
         figure.innerHTML = svg;
         pre.replaceWith(figure);
       } catch (error) {
+        delete pre.dataset.mermaidRendered;
         pre.classList.add("mermaid-error");
         console.error("Failed to render Mermaid diagram", error);
       }
@@ -59,3 +64,7 @@ async function renderMermaidBlocks() {
 }
 
 renderMermaidBlocks();
+
+new MutationObserver(() => {
+  void renderMermaidBlocks();
+}).observe(document.body, { childList: true, subtree: true });

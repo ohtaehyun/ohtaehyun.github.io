@@ -44,7 +44,7 @@ const tools = [
   },
   {
     name: 'TypeORM',
-    mark: 'TO'
+    icon: '/icons/typeorm.svg'
   },
   {
     name: 'Jest',
@@ -66,11 +66,21 @@ const interests = [
 const links = [
   {
     label: 'Blog',
-    href: site.url
+    href: site.url,
+    display: site.url.replace('https://', ''),
+    external: true
   },
   {
     label: 'GitHub',
-    href: 'https://github.com/ohtaehyun'
+    href: 'https://github.com/ohtaehyun',
+    display: 'github.com/ohtaehyun',
+    external: true
+  },
+  {
+    label: 'Contact',
+    href: 'mailto:othdev95@gmail.com',
+    display: 'othdev95@gmail.com',
+    external: false
   }
 ];
 ---
@@ -80,13 +90,10 @@ const links = [
     <h1>About Me</h1>
     <p>안녕하세요. 백엔드 개발자 오태현입니다.</p>
     <p>
-      단순히 '무엇을 만들 것인가(WHAT)'보다 '왜 만드는가(WHY)'를 우선시 하고 있습니다.
+      Node.js와 Nest.js를 중심으로 백엔드 서비스를 개발해 왔습니다.
     </p>
     <p>
-      이곳은 개발하면서 배운 것, 오래 남기고 싶은 생각, 작은 실험을 기록하는 공간입니다.
-    </p>
-    <p>
-      글은 짧아도 나중에 다시 읽을 수 있게 맥락과 근거를 남기는 것을 목표로 합니다.
+      단순히 동작하는 코드를 넘어, 규칙과 책임이 어디에 위치해야 유지보수하기 좋은지 고민합니다.
     </p>
   </section>
 
@@ -114,11 +121,7 @@ const links = [
       {
         tools.map((tool) => (
           <li class="skill-card">
-            {'icon' in tool ? (
-              <img src={tool.icon} alt="" width="44" height="44" loading="lazy" />
-            ) : (
-              <span class="skill-mark" aria-hidden="true">{tool.mark}</span>
-            )}
+            <img src={tool.icon} alt="" width="44" height="44" loading="lazy" />
             <span>{tool.name}</span>
           </li>
         ))
@@ -150,9 +153,14 @@ const links = [
       {
         links.map((link) => (
           <li>
-            <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
+            <a
+              class="link-card"
+              href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noreferrer' : undefined}
+            >
               <span>{link.label}</span>
-              <span>{link.href.replace('https://', '')}</span>
+              <span>{link.display}</span>
             </a>
           </li>
         ))
