@@ -29,7 +29,6 @@ const canonical = new URL(Astro.url.pathname, site.url);
   <body>
     <header class="site-header">
       <a class="brand" href="/" aria-label={`${site.title} 홈`}>
-        <span class="brand-mark" aria-hidden="true">OT</span>
         <span>{site.title}</span>
       </a>
       <nav class="nav" aria-label="주요 메뉴">
@@ -44,6 +43,10 @@ const canonical = new URL(Astro.url.pathname, site.url);
 
     <footer class="site-footer">
       <p>© {new Date().getFullYear()} {site.author}. Built with Astro.</p>
+      <p class="footer-contact">
+        Contact
+        <a href="mailto:othdev95@gmail.com">othdev95@gmail.com</a>
+      </p>
     </footer>
     <script>
       import '../scripts/mermaid';

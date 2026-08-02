@@ -1,12 +1,11 @@
-# 오태현 블로그
+# othdev's blog
 
-Astro로 만든 개인 블로그입니다.
+오태현이 개발하며 배운 것, 정리한 생각, 작은 실험과 기록을 차분하게 쌓아두는 개인 개발 블로그입니다.
 
-## 사용법
+## Link
 
-```bash
-npm install
-npm run dev
-```
+- Blog: [https://ohtaehyun.github.io](https://ohtaehyun.github.io)
 
-새 글은 `src/content/posts`에 Markdown 파일을 추가하면 됩니다.
+## Contact
+
+- Email: [othdev95@gmail.com](mailto:othdev95@gmail.com)

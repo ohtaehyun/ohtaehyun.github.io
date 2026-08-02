@@ -1,5 +1,5 @@
 export const site = {
-  title: '오태현 블로그',
+  title: "othdev's blog",
   description: '개발, 배움, 일상의 기록을 차분하게 쌓아두는 개인 블로그입니다.',
   author: '오태현',
   url: 'https://ohtaehyun.github.io'

@@ -1,15 +1,162 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
+
+const skills = [
+  {
+    name: 'TypeScript',
+    icon: '/icons/typescript.svg'
+  },
+  {
+    name: 'Node.js',
+    icon: '/icons/nodejs.svg'
+  },
+  {
+    name: 'Express',
+    icon: '/icons/express.svg'
+  },
+  {
+    name: 'Nest.js',
+    icon: '/icons/nestjs.svg'
+  },
+  {
+    name: 'PostgreSQL',
+    icon: '/icons/postgresql.svg'
+  },
+  {
+    name: 'AWS',
+    icon: '/icons/aws.svg'
+  },
+  {
+    name: 'Redis',
+    icon: '/icons/redis.svg'
+  }
+];
+
+const tools = [
+  {
+    name: 'Docker',
+    icon: '/icons/docker.svg'
+  },
+  {
+    name: 'GitHub Actions',
+    icon: '/icons/github-actions.svg'
+  },
+  {
+    name: 'TypeORM',
+    mark: 'TO'
+  },
+  {
+    name: 'Jest',
+    icon: '/icons/jest.svg'
+  }
+];
+
+const interests = [
+  {
+    name: 'Spring',
+    icon: '/icons/spring.svg'
+  },
+  {
+    name: 'Kubernetes',
+    icon: '/icons/kubernetes.svg'
+  }
+];
+
+const links = [
+  {
+    label: 'Blog',
+    href: site.url
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/ohtaehyun'
+  }
+];
 ---
 
 <BaseLayout title="소개" description={`${site.author}의 블로그 소개`}>
-  <section class="page-section">
-    <p class="eyebrow">About</p>
-    <h1>안녕하세요. {site.author}입니다.</h1>
+  <section class="page-section about-section">
+    <h1>About Me</h1>
+    <p>안녕하세요. 백엔드 개발자 오태현입니다.</p>
+    <p>
+      단순히 '무엇을 만들 것인가(WHAT)'보다 '왜 만드는가(WHY)'를 우선시 하고 있습니다.
+    </p>
     <p>
       이곳은 개발하면서 배운 것, 오래 남기고 싶은 생각, 작은 실험을 기록하는 공간입니다.
+    </p>
+    <p>
       글은 짧아도 나중에 다시 읽을 수 있게 맥락과 근거를 남기는 것을 목표로 합니다.
     </p>
+  </section>
+
+  <section class="skills-section" aria-labelledby="skills-heading">
+    <div class="section-heading">
+      <h2 id="skills-heading">Core</h2>
+    </div>
+    <ul class="skill-grid">
+      {
+        skills.map((skill) => (
+          <li class="skill-card">
+            <img src={skill.icon} alt="" width="44" height="44" loading="lazy" />
+            <span>{skill.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="tools-section" aria-labelledby="tools-heading">
+    <div class="section-heading">
+      <h2 id="tools-heading">Also Used</h2>
+    </div>
+    <ul class="tool-grid">
+      {
+        tools.map((tool) => (
+          <li class="skill-card">
+            {'icon' in tool ? (
+              <img src={tool.icon} alt="" width="44" height="44" loading="lazy" />
+            ) : (
+              <span class="skill-mark" aria-hidden="true">{tool.mark}</span>
+            )}
+            <span>{tool.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="interests-section" aria-labelledby="interests-heading">
+    <div class="section-heading">
+      <h2 id="interests-heading">Interested In</h2>
+    </div>
+    <ul class="interest-grid">
+      {
+        interests.map((interest) => (
+          <li class="skill-card">
+            <img src={interest.icon} alt="" width="44" height="44" loading="lazy" />
+            <span>{interest.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="links-section" aria-labelledby="links-heading">
+    <div class="section-heading">
+      <h2 id="links-heading">Links</h2>
+    </div>
+    <ul class="link-grid">
+      {
+        links.map((link) => (
+          <li>
+            <a class="link-card" href={link.href} target="_blank" rel="noreferrer">
+              <span>{link.label}</span>
+              <span>{link.href.replace('https://', '')}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </BaseLayout>
