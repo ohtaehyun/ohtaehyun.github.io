@@ -2,10 +2,6 @@
 title: Read와 Write는 동등할까?
 description: 검색 성능 개선, 조회는 단순하게 쓰기는 복잡하게
 pubDate: 2026-08-02
-tags:
-  - Database
-  - PostgreSQL
-  - Performance
 ---
 
 데이터베이스에서 read와 write는 동등하지 않습니다. 적어도 읽기 요청이 대부분인 일반적인 웹 서비스에서는 그렇습니다.

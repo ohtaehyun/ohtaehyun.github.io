@@ -2,10 +2,6 @@
 title: Trim 지수
 description: 반복되는 trim 호출과 정규화 책임, DTO와 VO의 역할
 pubDate: 2026-08-01
-tags:
-  - OOP
-  - DTO
-  - VO
 ---
 
 여러분은 Trim 지수에 대해서 들어보셨나요? 아마 들어보신 적이 없을 겁니다. 제가 임의로 만든 이름이기 때문입니다.

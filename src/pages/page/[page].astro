@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, postsPerPage, sortPosts, type BlogPost, type BlogPostListItem } from '../../data/site';
+
+export function getStaticPaths() {
+  const modules = import.meta.glob<BlogPost>('../../content/posts/*.md', { eager: true });
+  const allPosts = sortPosts(
+    Object.entries(modules).map(([path, post]) => ({
+      ...post,
+      url: `/posts/${path.split('/').pop()?.replace('.md', '')}/`
+    }))
+  );
+  const totalPages = Math.ceil(allPosts.length / postsPerPage);
+
+  return Array.from({ length: Math.max(totalPages - 1, 0) }, (_, index) => {
+    const currentPage = index + 2;
+    return {
+      params: { page: String(currentPage) },
+      props: {
+        currentPage,
+        posts: allPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage),
+        totalPages
+      }
+    };
+  });
+}
+
+type Props = {
+  currentPage: number;
+  posts: BlogPostListItem[];
+  totalPages: number;
+};
+
+const { currentPage, posts, totalPages } = Astro.props;
+const pageUrl = (page: number) => (page === 1 ? '/' : `/page/${page}/`);
+---
+
+<BaseLayout title={`글 목록 ${currentPage}페이지`}>
+  <section class="content-section" aria-labelledby="latest-posts">
+    <div class="section-heading">
+      <h1 id="latest-posts">최근 글</h1>
+      <p>{currentPage} / {totalPages} 페이지</p>
+    </div>
+
+    <div class="post-list">
+      {
+        posts.map((post) => (
+          <article class="post-card">
+            <a href={post.url}>
+              <time datetime={post.frontmatter.pubDate}>{formatDate(post.frontmatter.pubDate)}</time>
+              <h2>{post.frontmatter.title}</h2>
+              <p>{post.frontmatter.description}</p>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <nav class="pagination" aria-label="글 목록 페이지">
+      {currentPage > 1 ? <a href={pageUrl(currentPage - 1)}>이전</a> : <span aria-hidden="true">이전</span>}
+      <ol>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+          <li>
+            {page === currentPage ? (
+              <span aria-current="page">{page}</span>
+            ) : (
+              <a href={pageUrl(page)} aria-label={`${page}페이지로 이동`}>{page}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+      {currentPage < totalPages ? <a href={pageUrl(currentPage + 1)}>다음</a> : <span aria-hidden="true">다음</span>}
+    </nav>
+  </section>
+</BaseLayout>

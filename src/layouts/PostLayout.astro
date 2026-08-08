@@ -8,7 +8,6 @@ type Props = {
     description: string;
     pubDate: string;
     updatedDate?: string;
-    tags?: string[];
   };
 };
 
@@ -17,20 +16,11 @@ const { frontmatter } = Astro.props;
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <article class="post">
-    <a class="back-link" href="/">← 글 목록</a>
+    <a class="back-link" href="/">글 목록</a>
     <header class="post-header">
       <p class="eyebrow">{formatDate(frontmatter.pubDate)}</p>
       <h1>{frontmatter.title}</h1>
       <p>{frontmatter.description}</p>
-      {
-        frontmatter.tags?.length ? (
-          <ul class="tag-list" aria-label="태그">
-            {frontmatter.tags.map((tag) => (
-              <li>{tag}</li>
-            ))}
-          </ul>
-        ) : null
-      }
     </header>
     <div class="prose">
       <slot />
